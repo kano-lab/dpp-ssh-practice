@@ -18,8 +18,8 @@
 
 1. リポジトリをクローンします：
    ```bash
-   git clone https://github.com/yourusername/ssh-practice.git
-   cd ssh-practice
+   git clone https://github.com/kano-lab/dpp-ssh-practice.git
+   cd dpp-ssh-practice
    ```
 
 2. `students.csv` ファイルに学籍番号を追加します：
