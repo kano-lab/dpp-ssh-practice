@@ -1,0 +1,16 @@
+services:
+  ssh-server:
+    build:
+      context: ./ssh-server
+      dockerfile: Dockerfile
+    container_name: ssh-practice
+    ports:
+      - "2222:22"
+    volumes:
+      - ssh-logs:/var/log
+    restart: unless-stopped
+    init: true
+    privileged: true  # rsyslogdが正常に動作するため
+
+volumes:
+  ssh-logs:
