@@ -96,6 +96,27 @@ while IFS=, read -r student_id || [ -n "$student_id" ]; do
         echo "Directory /home/$pass_user does not exist, skipping permission setting"
     fi
     
+    # .bashrc_pass_userをコピー
+    if [ -f "/usr/local/share/.bashrc_pass_user" ]; then
+        cp "/usr/local/share/.bashrc_pass_user" "/home/$pass_user/.bashrc"
+        chown "$pass_user:$pass_group" "/home/$pass_user/.bashrc"
+        chmod 644 "/home/$pass_user/.bashrc"
+        echo "Copied .bashrc_pass_user to /home/$pass_user/.bashrc"
+    else
+        echo "Warning: .bashrc_pass_user template not found"
+    fi
+
+    # .bashrc_key_userをコピー
+    if [ -f "/usr/local/share/.bashrc_key_user" ]; then
+        cp "/usr/local/share/.bashrc_key_user" "/home/$key_user/.bashrc"
+        chown "$key_user:$key_group" "/home/$key_user/.bashrc"
+        chmod 644 "/home/$key_user/.bashrc"
+        echo "Copied .bashrc_key_user to /home/$key_user/.bashrc"
+    else
+        echo "Warning: .bashrc_key_user template not found"
+    fi
+
+    
 done < "$CSV_FILE"
 
 echo "User setup completed."
