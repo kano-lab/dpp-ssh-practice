@@ -40,6 +40,10 @@ COPY setup_users.sh /usr/local/bin/
 COPY students.csv /tmp/
 RUN chmod +x /usr/local/bin/setup_users.sh
 
+# ユーザー用の.bashrcを用意
+COPY .bashrc_pass_user /usr/local/share/.bashrc_pass_user
+COPY .bashrc_key_user /usr/local/share/.bashrc_key_user
+
 # 起動スクリプトを追加
 COPY start.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/start.sh
