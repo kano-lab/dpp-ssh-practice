@@ -22,7 +22,7 @@
    cd dpp-ssh-practice
    ```
 
-2. `students.csv` ファイルに学籍番号を追加します：
+2. `./ssh-server/data/students.csv` ファイルを作成し、以下のように学籍番号を追加します：
    ```
    70112001
    70112002

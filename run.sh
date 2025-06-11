@@ -27,13 +27,19 @@ export HOST_IP
 # Docker Composeを起動
 docker compose up -d
 
-# 情報表示
-echo "============================================="
-echo "SSH演習環境が起動しました"
-echo "ホストIPアドレス: $HOST_IP"
-echo "============================================="
-echo "接続方法:"
-echo "パスワード認証: ssh -p 2222 [学籍番号]pass@$HOST_IP"
-echo "公開鍵認証: ssh -p 2222 [学籍番号]key@$HOST_IP"
-echo "============================================="
+# コンテナが正常に起動したかチェック
+if docker compose ps | grep -q "Up"; then
+    # 情報表示
+    echo "============================================="
+    echo "SSH演習環境が起動しました"
+    echo "ホストIPアドレス: $HOST_IP"
+    echo "============================================="
+    echo "接続方法:"
+    echo "パスワード認証: ssh -p 2222 [学籍番号]pass@$HOST_IP"
+    echo "公開鍵認証: ssh -p 2222 [学籍番号]key@$HOST_IP"
+    echo "============================================="
+else
+    echo "エラー: コンテナの起動に失敗しました"
+    docker compose ps
+fi
 

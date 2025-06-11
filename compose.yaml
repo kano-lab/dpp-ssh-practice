@@ -7,10 +7,10 @@ services:
     ports:
       - "2222:22"
     volumes:
-      - ssh-logs:/var/log
+      - ./ssh-logs:/var/log/
     restart: unless-stopped
     init: true
-    privileged: true  # rsyslogdが正常に動作するため
+    privileged: true  
 
 volumes:
   ssh-logs:
