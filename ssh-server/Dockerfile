@@ -19,7 +19,7 @@ RUN echo 'PermitRootLogin no' >> /etc/ssh/sshd_config
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
 
 # keyユーザーのパスワード認証を無効化する設定を追加
-COPY ssh_config_match.conf /etc/ssh/sshd_config.d/
+COPY config/ssh_config_match.conf /etc/ssh/sshd_config.d/
 RUN chmod 644 /etc/ssh/sshd_config.d/ssh_config_match.conf
 RUN echo 'Include /etc/ssh/sshd_config.d/*.conf' >> /etc/ssh/sshd_config
 
@@ -35,17 +35,22 @@ RUN sed -i 's/^\$ModLoad imklog/#\$ModLoad imklog/' /etc/rsyslog.conf || echo "i
 # 空のログファイルを作成し、適切な権限を設定
 RUN touch /var/log/ssh.log && chmod 666 /var/log/ssh.log
 
+# kanolabユーザーを作成してsudo権限を付与
+RUN useradd -m -s /bin/bash kanolab && \
+    echo 'kanolab:kano2333' | chpasswd && \
+    usermod -aG sudo kanolab
+
 # ユーザー作成スクリプトを追加
-COPY setup_users.sh /usr/local/bin/
-COPY students.csv /tmp/
+COPY scripts/setup_users.sh /usr/local/bin/
+COPY data/students.csv /tmp/students.csv
 RUN chmod +x /usr/local/bin/setup_users.sh
 
 # ユーザー用の.bashrcを用意
-COPY .bashrc_pass_user /usr/local/share/.bashrc_pass_user
-COPY .bashrc_key_user /usr/local/share/.bashrc_key_user
+COPY config/.bashrc_pass_user /usr/local/share/.bashrc_pass_user
+COPY config/.bashrc_key_user /usr/local/share/.bashrc_key_user
 
 # 起動スクリプトを追加
-COPY start.sh /usr/local/bin/
+COPY scripts/start.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/start.sh
 
 # SSHのポートを公開
