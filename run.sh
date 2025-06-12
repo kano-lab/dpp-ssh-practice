@@ -25,7 +25,7 @@ fi
 export HOST_IP
 
 # Docker Composeを起動
-docker compose up -d
+docker compose up --build -d
 
 # コンテナが正常に起動したかチェック
 if docker compose ps | grep -q "Up"; then

@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     openssh-server \
     sudo \
     vim \
+    nano \
     python3 \
     python3-pip \
     rsyslog \
