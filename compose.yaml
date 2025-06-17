@@ -12,5 +12,20 @@ services:
     init: true
     privileged: true  
 
+  watcher-ssh:
+    build:
+      context: ./watcher_ssh
+      dockerfile: Dockerfile
+    container_name: watcher-ssh
+    volumes:
+      - ./ssh-logs:/watcher-ssh/ssh-logs:ro
+      - ./ssh-server/data:/watcher-ssh/ssh-server/data:ro
+    depends_on:
+      - ssh-server
+    restart: unless-stopped
+    tty: true
+    environment:
+      - DOCKER_ENV=true
+
 volumes:
   ssh-logs:
