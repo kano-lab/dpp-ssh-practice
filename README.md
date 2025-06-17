@@ -34,6 +34,16 @@
    ./run.sh
    ```
 
+4. コンテナが起動した後、ssh-logs/auth.log ファイルが生成されたことを確認したのち、以下のコマンドを実行することで、ユーザーごとのステータスを確認できます。
+    ```bash
+    docker logs -f watcher-ssh
+    ```
+
+5. 終了時は以下のコマンドでコンテナを停止します。
+   ```bash
+   docker compose down
+   ```
+
 ## 環境構成
 
 - `run.sh`: 環境起動スクリプト

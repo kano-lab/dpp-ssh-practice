@@ -21,11 +21,22 @@ else
     echo "ホストIPアドレス: $HOST_IP を検出しました。"
 fi
 
+# ssh-logsディレクトリを内のauth.logを初期化
+if [ -d "ssh-logs" ]; then
+    if [ -f "ssh-logs/auth.log" ]; then
+        # auth.logが存在する場合はindexをつけてバックアップ
+        echo "古いauth.logをバックアップして、新しいauth.logファイルを作成します"
+        mv ssh-logs/auth.log ssh-logs/auth.log.bak.$(date +%Y%m%d%H%M%S)
+        echo "バックアップを作成しました: ssh-logs/auth.log.bak.$(date +%Y%m%d%H%M%S)"
+    fi
+    touch ssh-logs/auth.log
+fi
+
 # 環境変数にセット
 export HOST_IP
 
 # Docker Composeを起動
-docker compose up --build -d
+docker compose up --build -d --force-recreate
 
 # コンテナが正常に起動したかチェック
 if docker compose ps | grep -q "Up"; then
