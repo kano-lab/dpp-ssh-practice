@@ -29,7 +29,11 @@ if [ -d "ssh-logs" ]; then
         mv ssh-logs/auth.log ssh-logs/auth.log.bak.$(date +%Y%m%d%H%M%S)
         echo "バックアップを作成しました: ssh-logs/auth.log.bak.$(date +%Y%m%d%H%M%S)"
     fi
-    touch ssh-logs/auth.log
+    if ! touch ssh-logs/auth.log; then
+        echo "エラー: ファイルの作成に失敗しました"
+        exit 1
+    fi
+    echo "ファイルが作成されました"
 fi
 
 # 環境変数にセット
