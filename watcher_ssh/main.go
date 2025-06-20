@@ -55,7 +55,7 @@ func loadUserStatusFromCSV(csvPath string) (map[string]Status, error) {
 }
 
 func main() {
-	filePath := "/watcher-ssh/ssh-logs/auth.log"
+	filePath := "/watcher-ssh/ssh-logs/ssh.log"
 	csvPath := "/watcher-ssh/ssh-server/data/students.csv"
 
 	watcher, err := fsnotify.NewWatcher()

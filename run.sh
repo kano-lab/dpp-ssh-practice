@@ -21,20 +21,25 @@ else
     echo "ホストIPアドレス: $HOST_IP を検出しました。"
 fi
 
-# ssh-logsディレクトリを内のauth.logを初期化
-if [ -d "ssh-logs" ]; then
-    if [ -f "ssh-logs/auth.log" ]; then
-        # auth.logが存在する場合はindexをつけてバックアップ
-        echo "古いauth.logをバックアップして、新しいauth.logファイルを作成します"
-        mv ssh-logs/auth.log ssh-logs/auth.log.bak.$(date +%Y%m%d%H%M%S)
-        echo "バックアップを作成しました: ssh-logs/auth.log.bak.$(date +%Y%m%d%H%M%S)"
-    fi
-    if ! touch ssh-logs/auth.log; then
-        echo "エラー: ファイルの作成に失敗しました"
-        exit 1
-    fi
-    echo "ファイルが作成されました"
+if [ ! -d "ssh-logs" ]; then
+    echo "ssh-logsディレクトリが存在しません。作成します。"
+    mkdir ssh-logs
+else
+    echo "ssh-logsディレクトリは既に存在します。"
 fi
+
+# ssh-logsディレクトリを内のauth.logを初期化
+if [ -f "ssh-logs/ssh.log" ]; then
+    # ssh.logが存在する場合はindexをつけてバックアップ
+    echo "古いssh.logをバックアップして、新しいssh.logファイルを作成します"
+    mv ssh-logs/ssh.log ssh-logs/ssh.log.bak.$(date +%Y%m%d%H%M%S)
+    echo "バックアップを作成しました: ssh-logs/ssh.log.bak.$(date +%Y%m%d%H%M%S)"
+fi
+if ! touch ssh-logs/ssh.log; then
+    echo "エラー: ファイルの作成に失敗しました"
+    exit 1
+fi
+echo "ファイルが作成されました"
 
 # 環境変数にセット
 export HOST_IP
